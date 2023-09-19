@@ -46,7 +46,7 @@ export default defineComponent({
 
   .pattern {
     position: absolute;
-    top: 0;
+    top: -15%;
     left: 0;
     z-index: 1;
     width: 100%;
@@ -54,9 +54,11 @@ export default defineComponent({
 
   .header {
     position: relative;
-    z-index: 2;
-    margin-top: 110px;
     text-align: center;
+    z-index: 2;
+
+    margin-top: 110px;
+    margin-bottom: 95px;
 
     &__main {
       color: $cta-background-color;
@@ -75,6 +77,16 @@ export default defineComponent({
       bottom: 0;
       z-index: -1;
     }
+  }
+
+  .card {
+    z-index: 2;
+    width: 544px;
+    height: 400px;
+    background: $pricing-component-background-color;
+    border-radius: 15px;
+
+    // TODO: add shadow
   }
 }
 </style>
