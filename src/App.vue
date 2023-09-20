@@ -8,7 +8,13 @@
     <img src="./assets/images/pattern-circles.svg" alt="circles pattern" />
   </div>
   <div class="card">
-    <div class="card__info"></div>
+    <div class="card__info">
+      <div class="card__info__views">{{ pageViews }}k pageviews</div>
+      <div class="card__info__price">
+        <span>${{ price.toFixed(2) }}</span>
+        <span>{{ isYearly ? "year" : "month" }}</span>
+      </div>
+    </div>
     <!-- slider -->
     <div class="card__toogle"></div>
     <div class="card__divider"></div>
@@ -21,6 +27,13 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "App",
+  data() {
+    return {
+      pageViews: 100,
+      price: 16,
+      isYearly: false,
+    };
+  },
 });
 </script>
 
@@ -85,8 +98,41 @@ export default defineComponent({
     height: 400px;
     background: $pricing-component-background-color;
     border-radius: 15px;
+    padding: 52px 43px 40px;
 
     // TODO: add shadow
+
+    &__info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &__views {
+        color: $text-color;
+        text-transform: uppercase;
+        font-size: $fs-paragraph;
+        font-weight: $fw-extra-bold;
+        letter-spacing: 1px;
+      }
+
+      &__price {
+        span:nth-child(1) {
+          color: $cta-background-color;
+          font-size: 40px;
+          font-weight: $fw-extra-bold;
+          vertical-align: middle;
+        }
+
+        span:nth-child(2) {
+          vertical-align: middle;
+          color: $text-color;
+          margin-left: 5px;
+          &::before {
+            content: "/ ";
+          }
+        }
+      }
+    }
   }
 }
 </style>
