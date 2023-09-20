@@ -22,6 +22,7 @@
       max="200"
       min="10"
       step="10"
+      @input="updateSliderBackground"
     />
     <div class="card__toogle"></div>
     <div class="card__divider"></div>
@@ -30,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 
 export default defineComponent({
   name: "App",
@@ -38,8 +39,27 @@ export default defineComponent({
     const pageViews = ref(100);
     const price = ref(16);
     const isYearly = ref(false);
+    const sliderEl = ref(null);
 
-    return { pageViews, price, isYearly };
+    const updateSliderBackground = () => {
+      const sliderElement = document.querySelector(
+        ".card__range"
+      ) as HTMLInputElement;
+      const sliderValue: number = parseInt(sliderElement.value);
+
+      const progress =
+        ((sliderValue - parseInt(sliderElement.min)) /
+          (parseInt(sliderElement.max) - parseInt(sliderElement.min))) *
+        100;
+
+      sliderElement.style.background = `linear-gradient(to right, hsl(174, 77%, 80%) ${progress}%, hsl(224, 65%, 95%) ${progress}%)`;
+    };
+
+    onMounted(() => {
+      updateSliderBackground();
+    });
+
+    return { pageViews, price, isYearly, updateSliderBackground };
   },
 });
 </script>
@@ -141,62 +161,75 @@ export default defineComponent({
       }
     }
 
-    // most generate by https://range-input-css.netlify.app/
     &__range {
       margin-top: 38px;
 
       -webkit-appearance: none;
       appearance: none;
-      background: transparent;
-      cursor: pointer;
       width: 100%;
+      cursor: pointer;
+      outline: none;
+      border-radius: 15px;
 
-      &:focus {
-        outline: none;
-      }
+      height: 6px;
+      background: $empty-slider-bar-color;
 
-      // chromium browsers
-      &::-webkit-slider-runnable-track {
-        background-color: $slider-bar-color;
-        border-radius: 0.5rem;
-        height: 0.5rem;
-      }
-
+      // TODO: create mixins
+      // TODO: change effect
+      // thumb: Webkit
       &::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        margin-top: -17px;
-        background-color: $slider-background-color;
-        border-radius: 100%;
         height: 42px;
         width: 42px;
-      }
-
-      // TODO: change focus effect
-      &:focus::-webkit-slider-thumb {
-        outline: 3px solid $slider-background-color;
-        outline-offset: 0.125rem;
-      }
-
-      // firefox
-      &::-moz-range-track {
-        background-color: $slider-bar-color;
-        border-radius: 0.5rem;
-        height: 0.5rem;
-      }
-
-      &::-moz-range-thumb {
         background-color: $slider-background-color;
+        background-image: url("./assets/images/icon-slider.svg");
+        background-repeat: no-repeat;
+        background-position: center center;
+        border-radius: 50%;
         border: none;
-        border-radius: 100%;
-        height: 42px;
-        width: 42px;
+
+        transition: 0.2s ease-in-out;
       }
 
-      // TODO: change focus effect
+      // thumb: Firefox
+      &::-moz-range-thumb {
+        height: 42px;
+        width: 42px;
+        background-color: $slider-background-color;
+        background-image: url("./assets/images/icon-slider.svg");
+        background-repeat: no-repeat;
+        background-position: center center;
+        border-radius: 50%;
+        border: none;
+
+        transition: 0.2s ease-in-out;
+      }
+
+      // active effects: Webkit
+      &::-webkit-slider-thumb:hover {
+        box-shadow: 0 0 0 10px hsla(174, 77%, 80%, 0.1);
+      }
+
+      &:active::-webkit-slider-thumb {
+        box-shadow: 0 0 0 13px hsla(174, 77%, 80%, 0.2);
+      }
+
+      &:focus::-webkit-slider-thumb {
+        box-shadow: 0 0 0 13px hsla(174, 77%, 80%, 0.2);
+      }
+
+      // active effects: Firefox
+      &::-moz-range-thumb:hover {
+        box-shadow: 0 0 0 10px hsla(174, 77%, 80%, 0.1);
+      }
+
+      &:active::-moz-range-thumb {
+        box-shadow: 0 0 0 13px hsla(174, 77%, 80%, 0.2);
+      }
+
       &:focus::-moz-range-thumb {
-        outline: 3px solid $slider-background-color;
-        outline-offset: 0.125rem;
+        box-shadow: 0 0 0 13px hsla(174, 77%, 80%, 0.2);
       }
     }
   }
