@@ -15,7 +15,14 @@
         <span>{{ isYearly ? "year" : "month" }}</span>
       </div>
     </div>
-    <!-- slider -->
+    <input
+      class="card__range"
+      type="range"
+      v-model="pageViews"
+      max="200"
+      min="10"
+      step="10"
+    />
     <div class="card__toogle"></div>
     <div class="card__divider"></div>
     <div class="card__footer"></div>
@@ -23,16 +30,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "App",
-  data() {
-    return {
-      pageViews: 100,
-      price: 16,
-      isYearly: false,
-    };
+  setup() {
+    const pageViews = ref(100);
+    const price = ref(16);
+    const isYearly = ref(false);
+
+    return { pageViews, price, isYearly };
   },
 });
 </script>
@@ -131,6 +138,65 @@ export default defineComponent({
             content: "/ ";
           }
         }
+      }
+    }
+
+    // most generate by https://range-input-css.netlify.app/
+    &__range {
+      margin-top: 38px;
+
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+      width: 100%;
+
+      &:focus {
+        outline: none;
+      }
+
+      // chromium browsers
+      &::-webkit-slider-runnable-track {
+        background-color: $slider-bar-color;
+        border-radius: 0.5rem;
+        height: 0.5rem;
+      }
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        margin-top: -17px;
+        background-color: $slider-background-color;
+        border-radius: 100%;
+        height: 42px;
+        width: 42px;
+      }
+
+      // TODO: change focus effect
+      &:focus::-webkit-slider-thumb {
+        outline: 3px solid $slider-background-color;
+        outline-offset: 0.125rem;
+      }
+
+      // firefox
+      &::-moz-range-track {
+        background-color: $slider-bar-color;
+        border-radius: 0.5rem;
+        height: 0.5rem;
+      }
+
+      &::-moz-range-thumb {
+        background-color: $slider-background-color;
+        border: none;
+        border-radius: 100%;
+        height: 42px;
+        width: 42px;
+      }
+
+      // TODO: change focus effect
+      &:focus::-moz-range-thumb {
+        outline: 3px solid $slider-background-color;
+        outline-offset: 0.125rem;
       }
     }
   }
