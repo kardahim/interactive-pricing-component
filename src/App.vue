@@ -31,15 +31,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 
 export default defineComponent({
   name: "App",
   setup() {
     const pageViews = ref(100);
-    const price = ref(16);
     const isYearly = ref(false);
-    const sliderEl = ref(null);
+    const price = computed(() => {
+      let tempPrice;
+
+      if (isYearly.value) {
+        tempPrice = (pageViews.value / 100) * 16 * 12;
+        tempPrice *= 0.75;
+      } else {
+        tempPrice = (pageViews.value / 100) * 16;
+      }
+
+      return tempPrice;
+    });
 
     const updateSliderBackground = () => {
       const sliderElement = document.querySelector(
