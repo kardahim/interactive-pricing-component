@@ -24,7 +24,15 @@
       step="10"
       @input="updateSliderBackground"
     />
-    <div class="card__toogle"></div>
+    <div class="card__toogle">
+      <div class="card__toogle__monthly">Monthly Billing</div>
+      <input type="checkbox" id="switch" v-model="isYearly" />
+      <label for="switch">Toogle</label>
+      <div class="card__toogle__yearly">
+        <span>Yearly Billing</span>
+        <span>25% discount</span>
+      </div>
+    </div>
     <div class="card__divider"></div>
     <div class="card__footer"></div>
   </div>
@@ -222,6 +230,74 @@ export default defineComponent({
 
       &:focus::-moz-range-thumb {
         box-shadow: 0 0 0 13px hsla(174, 77%, 80%, 0.2);
+      }
+    }
+
+    &__toogle {
+      display: flex;
+      justify-content: right;
+      align-items: center;
+      margin-top: 50px;
+      font-size: 14px;
+      color: $text-color;
+
+      &__yearly {
+        span:nth-child(1) {
+        }
+        span:nth-child(2) {
+          margin: 0 15px 10px 0;
+          color: hsl(15, 100%, 70%);
+          margin-left: 5px;
+          background: hsla(15, 100%, 70%, 0.1);
+          border-radius: 20px;
+          padding: 0 5px;
+        }
+      }
+
+      input[type="checkbox"] {
+        height: 0;
+        width: 0;
+        visibility: hidden;
+      }
+
+      // toogle container
+      label {
+        margin: 0 12px;
+        cursor: pointer;
+        text-indent: -9999px;
+        width: 44px;
+        height: 24px;
+        background: $toogle-background-color;
+        display: block;
+        border-radius: 12px;
+        position: relative;
+      }
+
+      // toogle circle
+      label:after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 4px;
+        width: 18px;
+        height: 18px;
+        background: #fff;
+        border-radius: 50%;
+        transition: 0.3s;
+      }
+
+      input:checked + label {
+        background: $slider-background-color;
+        transition: 0.3s;
+      }
+      label:hover,
+      input:checked + label:hover {
+        background: $slider-bar-color;
+        transition: 0.3s;
+      }
+
+      input:checked + label:after {
+        left: calc(100% - 23px);
       }
     }
   }
