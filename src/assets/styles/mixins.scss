@@ -1,0 +1,12 @@
+@mixin slider-thumb {
+  height: 42px;
+  width: 42px;
+  background-color: $slider-background-color;
+  background-image: url("./assets/images/icon-slider.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 50%;
+  border: none;
+
+  transition: 0.2s ease-in-out;
+}

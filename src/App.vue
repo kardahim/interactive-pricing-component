@@ -66,6 +66,7 @@ export default defineComponent({
 
 <style lang="scss">
 @import "./assets/styles/variables.scss";
+@import "./assets/styles/mixins.scss";
 
 * {
   margin: 0;
@@ -174,36 +175,17 @@ export default defineComponent({
       height: 6px;
       background: $empty-slider-bar-color;
 
-      // TODO: create mixins
       // TODO: change effect
       // thumb: Webkit
       &::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        height: 42px;
-        width: 42px;
-        background-color: $slider-background-color;
-        background-image: url("./assets/images/icon-slider.svg");
-        background-repeat: no-repeat;
-        background-position: center center;
-        border-radius: 50%;
-        border: none;
-
-        transition: 0.2s ease-in-out;
+        @include slider-thumb;
       }
 
       // thumb: Firefox
       &::-moz-range-thumb {
-        height: 42px;
-        width: 42px;
-        background-color: $slider-background-color;
-        background-image: url("./assets/images/icon-slider.svg");
-        background-repeat: no-repeat;
-        background-position: center center;
-        border-radius: 50%;
-        border: none;
-
-        transition: 0.2s ease-in-out;
+        @include slider-thumb;
       }
 
       // active effects: Webkit
