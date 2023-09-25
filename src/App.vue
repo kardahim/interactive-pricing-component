@@ -121,10 +121,11 @@ export default defineComponent({
 
   .pattern {
     position: absolute;
-    top: -15%;
+    top: 0;
     left: 0;
     z-index: 1;
     width: 100%;
+    height: 48.8%;
   }
 
   .header {
