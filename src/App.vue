@@ -73,7 +73,6 @@ import {
 export default defineComponent({
   name: "App",
   setup() {
-    // const isMobile = computed(() => window.innerWidth <= 750);
     const isMobile = ref(window.innerWidth <= 750);
     const pageViews = ref(100);
     const isYearly = ref(false);
@@ -110,7 +109,6 @@ export default defineComponent({
 
     onMounted(() => {
       updateSliderBackground();
-      // listen widnow resize
       window.addEventListener("resize", handleResize);
     });
 
