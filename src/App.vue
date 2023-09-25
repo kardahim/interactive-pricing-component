@@ -193,7 +193,6 @@ export default defineComponent({
       padding: 42px 15px 37px;
     }
 
-    // https://getcssscan.com/css-box-shadow-examples
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
     &__info {
