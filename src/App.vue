@@ -174,7 +174,7 @@ export default defineComponent({
 
     @include mobile {
       width: 390px;
-      height: 570px;
+      height: auto;
       padding: 42px 15px 37px;
     }
 
@@ -204,6 +204,9 @@ export default defineComponent({
           font-size: 40px;
           font-weight: $fw-extra-bold;
           vertical-align: middle;
+        }
+        @include mobile {
+          margin-bottom: 10px;
         }
 
         span:nth-child(2) {
@@ -297,6 +300,7 @@ export default defineComponent({
 
       @include mobile {
         margin-top: 20px;
+        margin-bottom: 40px;
       }
 
       &__yearly {
@@ -387,7 +391,11 @@ export default defineComponent({
         color: $text-color;
 
         @include mobile {
-          margin-bottom: 38px;
+          margin-bottom: 28px;
+
+          &__detail {
+            margin-bottom: 10px;
+          }
         }
 
         &__detail span {
