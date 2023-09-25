@@ -34,7 +34,23 @@
       </div>
     </div>
     <div class="card__divider"></div>
-    <div class="card__footer"></div>
+    <div class="card__footer">
+      <div class="card__footer__details">
+        <div class="card__footer__details__detail">
+          <img src="./assets/images/icon-check.svg" alt="check icon" />
+          <span>Unlimited websites</span>
+        </div>
+        <div class="card__footer__details__detail">
+          <img src="./assets/images/icon-check.svg" alt="check icon" />
+          <span>100% data ownership</span>
+        </div>
+        <div class="card__footer__details__detail">
+          <img src="./assets/images/icon-check.svg" alt="check icon" />
+          <span>Email reports</span>
+        </div>
+      </div>
+      <button class="card__footer__button">Start my trial</button>
+    </div>
   </div>
 </template>
 
@@ -139,6 +155,7 @@ export default defineComponent({
   }
 
   .card {
+    // position: relative;
     z-index: 2;
     width: 544px;
     height: 400px;
@@ -146,7 +163,8 @@ export default defineComponent({
     border-radius: 15px;
     padding: 52px 43px 40px;
 
-    // TODO: add shadow
+    // https://getcssscan.com/css-box-shadow-examples
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
     &__info {
       display: flex;
@@ -193,7 +211,6 @@ export default defineComponent({
       height: 6px;
       background: $empty-slider-bar-color;
 
-      // TODO: change effect
       // thumb: Webkit
       &::-webkit-slider-thumb {
         -webkit-appearance: none;
@@ -209,10 +226,15 @@ export default defineComponent({
       // active effects: Webkit
       &::-webkit-slider-thumb:hover {
         box-shadow: 0 0 0 10px hsla(174, 77%, 80%, 0.1);
+        background-color: $thumb-hover-color;
       }
 
       &:active::-webkit-slider-thumb {
         box-shadow: 0 0 0 13px hsla(174, 77%, 80%, 0.2);
+        cursor: move;
+        cursor: grabbing;
+        cursor: -webkit-grabbing;
+        background-color: $thumb-active-color;
       }
 
       &:focus::-webkit-slider-thumb {
@@ -222,10 +244,15 @@ export default defineComponent({
       // active effects: Firefox
       &::-moz-range-thumb:hover {
         box-shadow: 0 0 0 10px hsla(174, 77%, 80%, 0.1);
+        background-color: $thumb-hover-color;
       }
 
       &:active::-moz-range-thumb {
         box-shadow: 0 0 0 13px hsla(174, 77%, 80%, 0.2);
+        cursor: move;
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        background-color: $thumb-active-color;
       }
 
       &:focus::-moz-range-thumb {
@@ -246,9 +273,9 @@ export default defineComponent({
         }
         span:nth-child(2) {
           margin: 0 15px 10px 0;
-          color: hsl(15, 100%, 70%);
+          color: $discount-text-color;
           margin-left: 5px;
-          background: hsla(15, 100%, 70%, 0.1);
+          background: $discount-background-color;
           border-radius: 20px;
           padding: 0 5px;
         }
@@ -298,6 +325,48 @@ export default defineComponent({
 
       input:checked + label:after {
         left: calc(100% - 23px);
+      }
+    }
+
+    &__divider {
+      // position: absolute;
+      height: 1px;
+      background: $empty-slider-bar-color;
+      margin: 35px 0;
+      // ignore parent padding
+      width: calc(100% + 43px * 2);
+      margin-left: -43px;
+    }
+
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &__details {
+        font-size: $fs-paragraph;
+        color: $text-color;
+
+        &__detail span {
+          margin-left: 15px;
+        }
+      }
+
+      &__button {
+        width: 170px;
+        height: 40px;
+        border: none;
+        outline: none;
+        color: $cta-text-color;
+        background: $cta-background-color;
+        font-weight: $fw-semi-bold;
+        border-radius: 50px;
+        transition: 0.3s;
+
+        &:hover {
+          color: $pricing-component-background-color;
+          cursor: pointer;
+        }
       }
     }
   }
