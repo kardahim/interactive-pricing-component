@@ -3,14 +3,15 @@
   <div class="header">
     <h1 class="header__main">Simple, traffic-based pricing</h1>
     <p class="header__sub">
-      Sign-up for our 30-day trial. No credit card required.
+      Sign-up for our 30-day trial. <br v-if="isMobile" />No credit card
+      required.
     </p>
     <img src="./assets/images/pattern-circles.svg" alt="circles pattern" />
   </div>
   <div class="card">
     <div class="card__info">
       <div class="card__info__views">{{ pageViews }}k pageviews</div>
-      <div class="card__info__price">
+      <div class="card__info__price" v-if="!isMobile">
         <span>${{ price.toFixed(2) }}</span>
         <span>{{ isYearly ? "year" : "month" }}</span>
       </div>
@@ -24,13 +25,19 @@
       step="10"
       @input="updateSliderBackground"
     />
+    <div class="card__info" v-if="isMobile">
+      <div class="card__info__price">
+        <span>${{ price.toFixed(2) }}</span>
+        <span>{{ isYearly ? "year" : "month" }}</span>
+      </div>
+    </div>
     <div class="card__toogle">
       <div class="card__toogle__monthly">Monthly Billing</div>
       <input type="checkbox" id="switch" v-model="isYearly" />
       <label for="switch">Toogle</label>
       <div class="card__toogle__yearly">
         <span>Yearly Billing</span>
-        <span>25% discount</span>
+        <span>{{ !isMobile ? "25% discount" : "-25%" }}</span>
       </div>
     </div>
     <div class="card__divider"></div>
@@ -60,6 +67,7 @@ import { computed, defineComponent, onMounted, ref } from "vue";
 export default defineComponent({
   name: "App",
   setup() {
+    const isMobile = computed(() => window.innerWidth <= 750);
     const pageViews = ref(100);
     const isYearly = ref(false);
     const price = computed(() => {
@@ -93,7 +101,7 @@ export default defineComponent({
       updateSliderBackground();
     });
 
-    return { pageViews, price, isYearly, updateSliderBackground };
+    return { pageViews, price, isYearly, isMobile, updateSliderBackground };
   },
 });
 </script>
@@ -164,6 +172,12 @@ export default defineComponent({
     border-radius: 15px;
     padding: 52px 43px 40px;
 
+    @include mobile {
+      width: 390px;
+      height: 570px;
+      padding: 42px 15px 37px;
+    }
+
     // https://getcssscan.com/css-box-shadow-examples
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
@@ -171,6 +185,10 @@ export default defineComponent({
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      @include mobile {
+        justify-content: center;
+      }
 
       &__views {
         color: $text-color;
@@ -200,7 +218,7 @@ export default defineComponent({
     }
 
     &__range {
-      margin-top: 38px;
+      margin: 38px 0;
 
       -webkit-appearance: none;
       appearance: none;
@@ -211,6 +229,14 @@ export default defineComponent({
 
       height: 6px;
       background: $empty-slider-bar-color;
+
+      @include mobile {
+        width: calc(100% - (43px - 15px) * 2);
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        height: 8px;
+      }
 
       // thumb: Webkit
       &::-webkit-slider-thumb {
@@ -265,17 +291,18 @@ export default defineComponent({
       display: flex;
       justify-content: right;
       align-items: center;
-      margin-top: 50px;
+      margin-top: 12px;
       font-size: 14px;
       color: $text-color;
 
+      @include mobile {
+        margin-top: 20px;
+      }
+
       &__yearly {
-        span:nth-child(1) {
-        }
         span:nth-child(2) {
-          margin: 0 15px 10px 0;
+          margin: 0 15px 10px 5px;
           color: $discount-text-color;
-          margin-left: 5px;
           background: $discount-background-color;
           border-radius: 20px;
           padding: 0 5px;
@@ -337,6 +364,11 @@ export default defineComponent({
       // ignore parent padding
       width: calc(100% + 43px * 2);
       margin-left: -43px;
+
+      @include mobile {
+        width: calc(100% + 15px * 2);
+        margin-left: -15px;
+      }
     }
 
     &__footer {
@@ -344,9 +376,19 @@ export default defineComponent({
       justify-content: space-between;
       align-items: center;
 
+      @include mobile {
+        flex-direction: column;
+        // width: auto;
+        text-align: center;
+      }
+
       &__details {
         font-size: $fs-paragraph;
         color: $text-color;
+
+        @include mobile {
+          margin-bottom: 38px;
+        }
 
         &__detail span {
           margin-left: 15px;
