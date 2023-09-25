@@ -62,12 +62,19 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from "vue";
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref,
+  onBeforeUnmount,
+} from "vue";
 
 export default defineComponent({
   name: "App",
   setup() {
-    const isMobile = computed(() => window.innerWidth <= 750);
+    // const isMobile = computed(() => window.innerWidth <= 750);
+    const isMobile = ref(window.innerWidth <= 750);
     const pageViews = ref(100);
     const isYearly = ref(false);
     const price = computed(() => {
@@ -97,8 +104,18 @@ export default defineComponent({
       sliderElement.style.background = `linear-gradient(to right, hsl(174, 77%, 80%) ${progress}%, hsl(224, 65%, 95%) ${progress}%)`;
     };
 
+    const handleResize = () => {
+      isMobile.value = window.innerWidth <= 750;
+    };
+
     onMounted(() => {
       updateSliderBackground();
+      // listen widnow resize
+      window.addEventListener("resize", handleResize);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener("resize", handleResize);
     });
 
     return { pageViews, price, isYearly, isMobile, updateSliderBackground };
